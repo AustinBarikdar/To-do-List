@@ -5,8 +5,10 @@ import EmailVerify from "./pages/EmailVerify"
 import ResetPassword from "./pages/ResetPassword"
 import NavBar from "./components/NavBar"
 import BottomBar from "./components/BottomBar"
+import { ToastContainer } from 'react-toastify';
 
 const App = () => {
+  
   return (
     <div >
       <NavBar/>
@@ -16,6 +18,7 @@ const App = () => {
         <Route path='/email-verfiy' element = {<EmailVerify/>} />
         <Route path='/reset-password' element = {<ResetPassword/>} />
       </Routes>
+      <ToastContainer/>
       <BottomBar/>
     </div>
   )
