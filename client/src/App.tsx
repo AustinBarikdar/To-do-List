@@ -6,6 +6,8 @@ import ResetPassword from "./pages/ResetPassword"
 import NavBar from "./components/NavBar"
 import BottomBar from "./components/BottomBar"
 import { ToastContainer } from 'react-toastify';
+import Profile from "./pages/Profile"
+import ProtectedRoute from "./components/ProtectedRoutes"
 
 const App = () => {
   
@@ -14,10 +16,11 @@ const App = () => {
       <NavBar/>
       <Routes>
         <Route path='/' element = {<Home/>} />
-        <Route path='/login' element = {<Login/>} />
-        <Route path='/email-verfiy' element = {<EmailVerify/>} />
-        <Route path='/reset-password' element = {<ResetPassword/>} />
-      </Routes>
+        <Route path='/reset-password' element = {<ResetPassword/>} /> 
+          <Route path='/Profile'  element = {<ProtectedRoute type="/Login" beLogged = {true}  > <Profile/> </ProtectedRoute>} />
+          <Route path='/Login' element = {<ProtectedRoute type="/" beLogged = {false} > <Login/> </ProtectedRoute>} />
+          <Route path='/email-verfiy' element = { <ProtectedRoute type="/Login" beLogged = {false} > <EmailVerify/> </ProtectedRoute>} />
+      </Routes>  
       <ToastContainer/>
       <BottomBar/>
     </div>

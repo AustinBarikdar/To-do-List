@@ -13,9 +13,9 @@ const Login:React.FC = () => {
         throw new Error("AppContent context is undefined");
     }
     
-    const { backendURL, setIsLoggedin,isLoggedin } = context;
+    const {getUser, backendURL, setIsLoggedin } = context;
 
-    isLoggedin ? navigate("/") : null;
+    
 
     const toastdata: ToastOptions<unknown> = {theme:'dark',position:'bottom-right',className:' bg-slate-100/5'}
 
@@ -37,7 +37,8 @@ const Login:React.FC = () => {
             
             if (response.data.success) {
                 toast.success("Successfully created account",toastdata)
-                setIsLoggedin(true)
+                getUser()
+             
             }else{
                 toast.error(response.data.message,toastdata)
             } 
@@ -59,7 +60,8 @@ const Login:React.FC = () => {
             
             if (response.data.success){
                 toast.success("Successfully Signed in",toastdata)
-                setIsLoggedin(true)
+                getUser()
+                navigate("/");
              }else{
                 toast.error(response.data.message,toastdata)
             }

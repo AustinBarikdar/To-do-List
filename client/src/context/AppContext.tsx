@@ -15,12 +15,12 @@ export const AppContent = createContext <MyContextProps | undefined>(undefined);
 export const AppContextProvider = (props: any) => {
 
     const backendURL = import.meta.env.VITE_BACKEND_URL
-    const [isLoggedin,setIsLoggedin] = useState(localStorage.getItem('isLoggedin') === 'true');
+    const [isLoggedin,setIsLoggedin] = useState(localStorage.getItem('isLoggedin') == 'true');
     const [userData,setUserData] = useState(JSON.parse(localStorage.getItem('userData') || 'null'));
 
     useEffect(() => {
-        if (isLoggedin && !userData) {
-            getUser();
+        if (isLoggedin == true && !userData) {
+            //getUser();
         }
     }, [isLoggedin]);
 
@@ -30,8 +30,8 @@ export const AppContextProvider = (props: any) => {
         try{
             if (response.data.success){
                 console.log(response.data)
-                setIsLoggedin(true)
                 setUserData(response.data.userInfo)
+                setIsLoggedin(true)
             
                 localStorage.setItem('userData', JSON.stringify(response.data.userInfo));
                 localStorage.setItem('isLoggedin', "true");
