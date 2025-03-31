@@ -37,6 +37,9 @@ const NavBar:React.FC = () => {
     useEffect(() => {
         if (!isLoggedin ){
             console.log(localStorage.getItem('isLoggedin'))
+
+        }else{
+            console.log(localStorage.getItem('isLoggedin'))
         }
     }, [isLoggedin]);
    

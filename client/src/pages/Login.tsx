@@ -13,7 +13,7 @@ const Login:React.FC = () => {
         throw new Error("AppContent context is undefined");
     }
     
-    const {getUser, backendURL, setIsLoggedin } = context;
+    const {getUser, backendURL } = context;
 
     
 
@@ -90,8 +90,7 @@ const Login:React.FC = () => {
             event.preventDefault();
         }
 
-        
-        
+    
           
     }
 
@@ -105,6 +104,7 @@ const Login:React.FC = () => {
         <div className='flex justify-center' >
             <div className=' w-100 flex flex-col text-white py-10 font-bold ring-2 rounded shadow-xl bg-slate-100/5 px-4 ' >
                 {loginForm ? 
+                 <>
                 <form className=' flex flex-col text-white ' onSubmit={onSumbitFunction} >
                     <label>Email</label><br/>
                     <input type = "email"  onChange={(e) => setEmail(e.target.value)}  value={email} className = "ring-2 rounded shadow-xl py-1 px-1" ></input><br/>
@@ -114,7 +114,8 @@ const Login:React.FC = () => {
                         <input type="submit" value={"Login"} className = "ring-2 rounded-full shadow-xl py-1 px-8 hover:px-10 transition-all " ></input>
                     </div>
                 </form>
-
+                <button className='text-white/40 hover:text-white py-3' onClick={ () => {navigate("/reset-password")}}  > Forgot Passowrd? </button>
+                </>
                 :<form className=' flex flex-col text-white ' onSubmit={onSumbitFunction}  >
                     <label>Name</label><br/>
                     <input type = "text"  onChange={(e) => setName(e.target.value)} value={currentName} className = "ring-2 rounded shadow-xl py-1 px-1" ></input><br/>

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { createContext,useState, useEffect } from "react";
-
+import cookie from "js-cookie"
 interface MyContextProps {
     getUser: () => Promise<void>
     backendURL: any,
@@ -13,15 +13,15 @@ interface MyContextProps {
 export const AppContent = createContext <MyContextProps | undefined>(undefined);
 
 export const AppContextProvider = (props: any) => {
-
     const backendURL = import.meta.env.VITE_BACKEND_URL
     const [isLoggedin,setIsLoggedin] = useState(localStorage.getItem('isLoggedin') == 'true');
     const [userData,setUserData] = useState(JSON.parse(localStorage.getItem('userData') || 'null'));
 
     useEffect(() => {
-        if (isLoggedin == true && !userData) {
-            //getUser();
+        if (isLoggedin){
+            checkToken();
         }
+        
     }, [isLoggedin]);
 
     const getUser = async() => {
@@ -31,12 +31,30 @@ export const AppContextProvider = (props: any) => {
             if (response.data.success){
                 console.log(response.data)
                 setUserData(response.data.userInfo)
-                setIsLoggedin(true)
-            
                 localStorage.setItem('userData', JSON.stringify(response.data.userInfo));
+                setIsLoggedin(true)
                 localStorage.setItem('isLoggedin', "true");
             }else
             {
+                console.log(response.data)
+            }
+        }catch(error){
+            console.error(error)
+        }
+    }
+
+    const checkToken = async() => {
+
+        const response = await axios.get(backendURL + "/api/auth/check-token",{withCredentials:true})
+
+        try{
+            if (response.data.success == false){
+                localStorage.setItem('isLoggedin', 'false');
+                localStorage.removeItem('userData');
+                setIsLoggedin(false);
+                setUserData(false);
+                cookie.remove('token', {path: '/'});
+            }else{
                 console.log(response.data)
             }
         }catch(error){
