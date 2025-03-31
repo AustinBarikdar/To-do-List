@@ -1,6 +1,6 @@
-import bcrypt from "bcryptjs"; // library to hash passwords
-import jwt from "jsonwebtoken"; // library to create JSON Web Tokens
-import userModel from "../models/userModel.js"; // import the user model
+import bcrypt from "bcryptjs"; 
+import jwt from "jsonwebtoken";
+import userModel from "../models/userModel.js"; 
 import transporter from "../config/nodemailer.js";
 
 export const register = async (req, res) => {
@@ -101,7 +101,7 @@ export const login = async (req, res) => {
 
 export const logout = async (req, res) => {
   try {
-    // Clear the token cookie to log out the user
+    
     res.clearCookie("token", {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
@@ -228,6 +228,32 @@ export const sendResetPasswordOTP = async (req, res) => {
   }
 };
 
+
+export const checkPasswordOtp = async(req, res) =>{
+    const {email, otp} = req.query;
+  
+    try{
+
+        const user = await userModel.findOne({ email });
+
+        if (!user) {
+            return res.json({ success: false, message: "User not found" });
+        }   
+
+        if (user.resetOtp != otp) {
+            return res.json({ success: false, message: "Invalid OTP" });
+        }
+      
+        if (user.resetOtpExpireAt < Date.now()) {
+            return res.json({ success: false, message: "OTP Expired" });
+        }
+    return res.json({ success: true, message: "OTP is Correct" });
+
+    }catch(error){
+        return res.json({success:false, message:error.message});
+    }
+}
+
 export const resetPassword = async (req, res) => {
   try {
     const { email, otp, password } = req.body;
@@ -268,3 +294,24 @@ export const resetPassword = async (req, res) => {
     return res.json({ success: false, message: error.message });
   }
 };
+
+export const CheckToken = async(req,res) =>{
+    try{
+        const {token} = req.cookies;
+    
+        if (!token) {
+            return res.json({success:false, message: "Their is no Cookie, Login Again"});
+        }else{
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            
+            if (!decoded.id) {
+                return res.json({ success: false, message: "Unauthorized, Login again" });
+            }
+        }
+    return res.json({success:true, message: "Cookie working good"});
+
+    }catch(error){
+        return res.json({success:false, message: error.message});
+    }
+    
+}
