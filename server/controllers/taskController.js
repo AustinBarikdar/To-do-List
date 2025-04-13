@@ -18,7 +18,7 @@ export const CreateTask = async(req,res) => {
         const user = await userModel.findById(userId)
 
         if (!userId){
-            return res.json({success:false, message: "No User infomormation"} )
+            return res.json({success:false, message: "No User infomation"} )
         }
 
 
