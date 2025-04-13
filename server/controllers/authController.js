@@ -181,7 +181,7 @@ export const verifyEmail = async (req, res) => {
 
     await transporter.sendMail(mailOptions);
 
-    return res.json({ success: false, message: "Email verified successfully" });
+    return res.json({ success: true, message: "Email verified successfully" });
   } catch (error) {
     return res.json({ success: false, message: error.message });
   }

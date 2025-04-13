@@ -2,17 +2,17 @@ import mongoose from "mongoose"
 
 
 
-const Taskschmea = new mongoose.schmea({
+const Taskschmea = new mongoose.Schema({
     userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     title: {type: String, required: true},
-    text: { type: String, required: true },
+    description: { type: String, required: true },
+    date: {type: String, required: true},
     completed: { type: Boolean, default: false },
-    priority: {type: number, default: 0},
 
 
 })
 
 
-const taskModel = mongoose.model.task || mongoose.model('task',Taskschmea);
+const taskModel = mongoose.models.task || mongoose.model('task',Taskschmea);
 
 export default taskModel;

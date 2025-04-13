@@ -10,8 +10,6 @@ const userSchema = new mongoose.Schema({ //create user model
     isAccountVerified: {type: Boolean, default: false,},
     resetOtp: {type: String, default: '',},
     resetOtpExpireAt: {type: Number, default: 0,},
-
-
 })
 
 const userModel = mongoose.models.user || mongoose.model('user', userSchema); // the mongoose.models.user is if theirs a usermodel, unlesss use the schmea
