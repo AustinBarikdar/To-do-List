@@ -57,6 +57,9 @@ const NavBar:React.FC = () => {
                 {
                     isLoggedin ? 
                     <>
+                    <li className='mx-2 my-6 md:my-0'>
+                        <button onClick= {() => {navigate("/dashboard")}} className='text-white border-1 px-3 py-1 border-none rounded-md text hover:bg-sky-900 transition-all duration-300 ease-in-out drop-shadow-xl'> Dashboard </button>
+                    </li>
                     <li className='mx-5 my-1 hidden md:my-0 group md:block '>
                     <button className = "text-white flex size-10 rounded-full bg-white py-1.5 px-3.5 ring-1 ring-sky-900/5 dark:bg-white/5 dark:ring-white/100 hover:bg-white/10 z-20" >{userData.name[0]}</button>
                         <div className='md:group-hover:block hidden absolute bg-slate-800 text-white mt-2 rounded-md shadow-lg top-12 right-0 z-10'>

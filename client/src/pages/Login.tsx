@@ -30,7 +30,7 @@ const Login:React.FC = () => {
         try{
             const response = await axios.post( backendURL + '/api/auth/register',{
                 "name":currentName,
-                "email": email,
+                "email": email.toLowerCase(),
                 "password": password},{withCredentials: true})
             
             console.log(response.data)
@@ -53,7 +53,7 @@ const Login:React.FC = () => {
     async function Login(){
         try{
             const response = await axios.post(backendURL +'/api/auth/login',{
-                "email": email,
+                "email": email.toLowerCase(),
                 "password": password},{withCredentials: true})
             
             console.log(response.data)
@@ -63,7 +63,7 @@ const Login:React.FC = () => {
                 getUser()
                 navigate("/");
              }else{
-                toast.error(response.data.message,toastdata)
+                toast.error("Invalid Password or Email",toastdata)
             }
             
             return response.data.success
@@ -102,7 +102,7 @@ const Login:React.FC = () => {
                 <h1 className='text-[40px] font-bold text-white ring-2 rounded shadow-xl bg-slate-100/5 px-4 '  >{loginForm ? 'Login' : 'Register'}</h1>
          </div> 
         <div className='flex justify-center' >
-            <div className=' w-100 flex flex-col text-white py-10 font-bold ring-2 rounded shadow-xl bg-slate-100/5 px-4 ' >
+            <div className=' w-100 flex flex-col text-white py-10 font-bold ring-2 rounded shadow-xl bg-slate-100/5 px-4 mx-2 ' >
                 {loginForm ? 
                  <>
                 <form className=' flex flex-col text-white ' onSubmit={onSumbitFunction} >
