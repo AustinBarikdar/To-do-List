@@ -3,86 +3,132 @@ import React, { useContext } from 'react'
 import { AppContent } from '../context/AppContext';
 import { toast, ToastOptions } from 'react-toastify';
 
-const Dashboard:React.FC = () => {
-    const toastdata: ToastOptions<unknown> = {theme:'dark',position:'bottom-right',className:' bg-slate-100/5'}
-    const [date,setDate] = React.useState("");
-    const [title,setTitle] = React.useState("");
-    const [description,setDescription] = React.useState(" ");
-
+const Dashboard: React.FC = () => {
+    const toastdata: ToastOptions<unknown> = { theme: 'dark', position: 'bottom-right', className: 'bg-slate-100/5' };
+    const [date, setDate] = React.useState("");
+    const [title, setTitle] = React.useState("");
+    const [description, setDescription] = React.useState("");
 
     const context = useContext(AppContent);
-    
+
     if (!context) {
         throw new Error("AppContent context is undefined");
     }
 
-    const {backendURL } = context;
+    const { backendURL } = context;
 
-    const createTask = async() => {
-
-        if (!title || !date){
-            toast.error("The Date and Title is required to be filled",toastdata)
+    const createTask = async () => {
+        if (!title || !date) {
+            toast.error("The Date and Title is required to be filled", toastdata);
+            return;
         }
+        let desc = description || " ";
 
-        const {data} = await axios.post(backendURL + "/api/task/create-task",{
-            "title":title,
-            "description":description,
-            "date":date
-        },{withCredentials: true});
+        const { data } = await axios.post(backendURL + "/api/task/create-task", {
+            "title": title,
+            "description": desc,
+            "date": date
+        }, { withCredentials: true });
 
-        if (data.success){
-            toast.success("Succesfully created new task",toastdata)
-        }else{
-            toast.error(data.message,toastdata)
+        if (data.success) {
+            toast.success("Successfully created new task", toastdata);
+            setTitle("");
+            setDescription("");
+        } else {
+            toast.error(data.message, toastdata);
         }
-        
     }
 
-  return (
-    <div className='mt-auto min-h-screen  ' >
-         <div className='text-center py-5 mt-auto text-white mx-1 text-2xl font-bold'>
-                <h1>Dashboard</h1>
-         </div>
+    return (
+        <div className='min-h-screen bg-gradient-to-b from-gray-800 to-gray-900 text-white'>
+            <div className='text-center py-10'>
+                <h1 className='text-4xl font-bold'>Dashboard</h1>
+                <p className='text-gray-400 mt-2'>Manage your tasks efficiently</p>
+            </div>
 
-        <div className='lg:flex justify-between lg:pb-20 mt-auto text-white mx-1 h-125 '>
-            <div className='w-full ring-2 ring-white px-1 py-1 rounded shadow-2xl justify-center flex-col flex lg:w-full '>
-                <h1 className='font-bold text-center'>Create New Task</h1>
-                <h6 className='font-bold text-center text-white/50 text-sm'>Make a new task to add to a your to do list.</h6>
-                <div className='flex justify-center flex-col m-5'>
-                    <label className='font-bold text-m text-center'>Title</label>
-                    <input type='Text' onChange={(e) => { setTitle(e.target.value)}} className = "ring-2 rounded shadow-xl py-1 px-2 my-5 " placeholder='Title'/>
-                    <label className='font-bold text-m text-center'>Description</label>
-                    <input type='Text' onChange={(e) => { setDescription(e.target.value)}} className = "ring-2 rounded shadow-xl py-1 px-2 my-5 " placeholder='Description'/>  
-                    <label className='font-bold text-m text-center'>Time Due</label>
-                    <div className='flex justify-center '>
-                        <input type="datetime-local" id="due date" onChange = {(e) => {setDate(new Date(e.target.value).toUTCString()); console.log(new Date(e.target.value).toUTCString()); console.log(new Date(new Date(e.target.value).toUTCString()))}} name="due-date" className = "text-black ring-2 rounded py-1 px-2 my-5 w-55 invert" />
-                        
-                    </div> 
-                    <div className='flex justify-center '>
-                        <input type="button" onClick={createTask} className= "border-white ring-2 rounded-md px-5 hover:bg-white/50" value={"Create"}/>
-                    </div> 
+            <div className='lg:flex justify-between lg:pb-20 px-5'>
+                <div className='w-full lg:w-1/2 bg-gray-800 p-6 rounded-lg shadow-lg'>
+                    <h2 className='text-2xl font-semibold text-center'>Create New Task</h2>
+                    <p className='text-center text-gray-400 text-sm mb-6'>Add a new task to your to-do list</p>
+                    <div className='space-y-4'>
+                        <div>
+                            <label className='block font-medium'>Title</label>
+                            <input type='text' value={title} onChange={(e) => setTitle(e.target.value)} className='w-full p-2 rounded bg-gray-700 text-white focus:ring-2 focus:ring-blue-500' placeholder='Enter task title' />
+                        </div>
+                        <div>
+                            <label className='block font-medium'>Description</label>
+                            <textarea value={description} onChange={(e) => setDescription(e.target.value)} className='w-full p-2 rounded bg-gray-700 text-white focus:ring-2 focus:ring-blue-500' placeholder='Enter task description'></textarea>
+                        </div>
+                        <div>
+                            <label className='block font-medium'>Time Due</label>
+                            <input type="datetime-local" onChange={(e) => setDate(new Date(e.target.value).toUTCString())} className='w-full p-2 rounded bg-gray-700 text-white focus:ring-2 focus:ring-blue-500' />
+                        </div>
+                        <div className='text-center'>
+                            <button onClick={createTask} className='bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded'>Create Task</button>
+                        </div>
+                    </div>
                 </div>
 
-            </div>
-            <div className='border-black/70 border-y-2  my-5 border-r-2 w-full rounded-r-lg justify-center flex invisible sm:invisible md:invisible lg:visible h-sm invert'>
-                <ul className='w-full m-2 overflow-auto p-5'>
-                    <li className='rounded-sm ring-2 p-5 w-full text-black my-4  '>
-                        <h1 id="Topic" className="text-black text-lg">Homework 1</h1>
-                        <h1 id="Description" className="text-black/60 text-md text-wrap w-sm"> Homework is due soon Homework </h1>
-                    </li>
-                           
-                    
-                </ul>
-            </div>
-        </div> 
-            <div className='border-black/70  border-y-2 border-2 w-full  rounded justify-center flex sm:visible md:visible lg:invisible h-90 invert'>
-                <ul className='w-full m-2 overflow-auto p-5'>
-                    
-                </ul>
-            </div>   
-    </div>           
+                {/* Task List Section */}
+                <div className='w-full lg:w-1/2 mt-10 lg:mt-0 lg:ml-10 bg-gray-800 p-6 rounded-lg shadow-lg'>
+                    <h2 className='text-2xl font-semibold text-center'>Your Tasks</h2>
+                    <p className='text-center text-gray-400 text-sm mb-6'>View and manage your tasks</p>
+                    <ul className='space-y-4 overflow-auto max-h-96 scheme-dark bg-transparent px-5 scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-800'>
+                        
+                        <li className='bg-gray-700 p-4 px-5 rounded-lg shadow'>
+                            <h3 className='text-lg font-bold'>Homework 1</h3>
+                            <p className='text-gray-400 text-sm'>Homework is due soon</p>
+                            <div className='flex justify-between items-center mt-2'>
+                                <span className='text-gray-400 text-sm'>Due at: [Insert Due Date]</span>
+                                <div className='flex items-center'>
+                                    <label className='mr-2'>Completed</label>
+                                    <input type="checkbox" className="accent-blue-500" />
+                                </div>
+                            </div>
+                        </li>
 
-  )
+                        <li className='bg-gray-700 p-4 px-5 rounded-lg shadow'>
+                            <h3 className='text-lg font-bold'>Homework 1</h3>
+                            <p className='text-gray-400 text-sm'>Homework is due soon</p>
+                            <div className='flex justify-between items-center mt-2'>
+                                <span className='text-gray-400 text-sm'>Due at: [Insert Due Date]</span>
+                                <div className='flex items-center'>
+                                    <label className='mr-2'>Completed</label>
+                                    <input type="checkbox" className="accent-blue-500" />
+                                </div>
+                            </div>
+                        </li>
+                        <li className='bg-gray-700 p-4 px-5 rounded-lg shadow'>
+                            <h3 className='text-lg font-bold'>Homework 1</h3>
+                            <p className='text-gray-400 text-sm'>Homework is due soon</p>
+                            <div className='flex justify-between items-center mt-2'>
+                                <span className='text-gray-400 text-sm'>Due at: [Insert Due Date]</span>
+                                <div className='flex items-center'>
+                                    <label className='mr-2'>Completed</label>
+                                    <input type="checkbox" className="accent-blue-500" />
+                                </div>
+                            </div>
+                        </li>
+                        
+                        <li className='bg-gray-700 p-4 px-5 rounded-lg shadow'>
+                            <h3 className='text-lg font-bold'>Homework 1</h3>
+                            <p className='text-gray-400 text-sm'>Homework is due soon</p>
+                            <div className='flex justify-between items-center mt-2'>
+                                <span className='text-gray-400 text-sm'>Due at: [Insert Due Date]</span>
+                                <div className='flex items-center'>
+                                    <label className='mr-2'>Completed</label>
+                                    <input type="checkbox" className="accent-blue-500" />
+                                </div>
+                            </div>
+                        </li>
+
+                        
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    )
 }
 
-export default Dashboard
+export default Dashboard;

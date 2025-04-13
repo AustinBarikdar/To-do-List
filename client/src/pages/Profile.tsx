@@ -59,13 +59,11 @@ const Profile:React.FC = () => {
 
 
   return (
-    <div className='mt-auto min-h-screen  ' >
+    <div className=' bg-gradient-to-b from-gray-800 to-gray-800 mt-auto min-h-screen  ' >
         <div className='flex justify-center flex-col py-10 mt-auto'>
-            <div className='flex justify-center'>
-                <h1 className='text-white font-bold text-2xl shadow-2xl '>Profile</h1>
-            </div>
             <div className='flex justify-center py-5 px-5'>
-                <ul className='flex flex-col font-bold py-3 px-10 text-white ring-2 w-full md:w-lg rounded border-white-1/10 bg-slate-100/5 '>
+                <ul className='flex flex-col font-bold py-3 px-10 text-white w-full md:w-lg rounded bg-slate-100/5 '>
+                    <h1 className='text-white font-bold text-2xl text-center pb-5'>Profile</h1>
                     <li >Name: {userData.name}</li>
                     {  
                         userData.isAccountVerified?

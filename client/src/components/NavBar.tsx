@@ -44,24 +44,24 @@ const NavBar:React.FC = () => {
     }, [isLoggedin]);
    
   return (
-    <nav className = "bg-slate-800 p-4 drop-shadow-xl md:flex md:items-align md:justify-between">
+    <nav className = " bg-gradient-to-b from-gray-800 to-gray-800 p-4 z-2 md:flex md:items-align md:justify-between">
         
             <div className='px-2 mx-2 my-0 md:my-0' >
-                <button onClick= {() => {navigate("/")}} className='text-white border-1  py-1 border-none rounded-md text font-bold text-2xl underline drop-shadow-xl hover:text-white/80'  > StayOrganized </button>
+                <button onClick= {() => {navigate("/")}} className='text-white border-1  py-1 border-none rounded-md text font-bold text-2xl underline drop-shadow-xl duration-300 hover:text-white/90'  > StayOrganized </button>
             </div>
 
-            <ul className = "md:flex md:items-algin md:justify-start z-[-1] md:auto text-lg">
+            <ul className = "md:flex md:items-algin md:justify-start  md:auto text-lg">
                 <li className='mx-2 my-6 md:my-0'>
-                    <button onClick= {() => {navigate("/")}} className='text-white border-1 px-3 py-1 border-none rounded-md text hover:bg-sky-900 transition-all duration-300 ease-in-out drop-shadow-xl'> About </button>
+                    <button onClick= {() => {navigate("/")}} className='text-white border-1 px-3 py-1 border-none rounded-md text hover:text-white/90 transition-all duration-300 ease-in-out drop-shadow-xl'> About </button>
                 </li>
                 {
                     isLoggedin ? 
                     <>
                     <li className='mx-2 my-6 md:my-0'>
-                        <button onClick= {() => {navigate("/dashboard")}} className='text-white border-1 px-3 py-1 border-none rounded-md text hover:bg-sky-900 transition-all duration-300 ease-in-out drop-shadow-xl'> Dashboard </button>
+                        <button onClick= {() => {navigate("/dashboard")}} className='text-white border-1 px-3 py-1 border-none rounded-md text hover:text-white/90 transition-all duration-300  ease-in-out drop-shadow-xl'> Dashboard </button>
                     </li>
                     <li className='mx-5 my-1 hidden md:my-0 group md:block '>
-                    <button className = "text-white flex size-10 rounded-full bg-white py-1.5 px-3.5 ring-1 ring-sky-900/5 dark:bg-white/5 dark:ring-white/100 hover:bg-white/10 z-20" >{userData.name[0]}</button>
+                    <button className = "text-white flex size-10 rounded-full bg-white py-1.5 px-3.5  ring-sky-900/5 dark:bg-white/5 dark:ring-white/100 hover:bg-white/10 z-20" >{userData.name[0]}</button>
                         <div className='md:group-hover:block hidden absolute bg-slate-800 text-white mt-2 rounded-md shadow-lg top-12 right-0 z-10'>
                             <button onClick= {() => {navigate("/Profile")}} className="block px-5 py-2 text-12 hover:text-white/50">Profile</button>
                             <button onClick={Logout} className="block px-5 py-2 text-12 hover:text-white/50">Log Out</button>
@@ -77,7 +77,7 @@ const NavBar:React.FC = () => {
                     </> 
                     :
                     <li className='mx-5 my-1  md:my-0 '>
-                    <button onClick= {() => {navigate("/login")}} className = "  text-white text-xl border-1 rounded-md ring-1 px-5 py-0.5  transition-all duration-300 ease-in-out hover:bg-slate-900/50 drop-shadow-xl relative">Login</button>
+                        <button onClick= {() => {navigate("/login")}} className = "  text-white text-xl  rounded-sm px-5 py-0.5 bg-blue-500   transition-all duration-300 ease-in-out hover:bg-blue-500/50 drop-shadow-xl relative">Login</button>
                     </li>
                 }
                 

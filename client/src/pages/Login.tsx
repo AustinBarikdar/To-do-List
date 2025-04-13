@@ -95,40 +95,38 @@ const Login:React.FC = () => {
     }
 
   return (
-    <div className='mt-auto min-h-screen '>
-         <div className='flex justify-center flex-col py-10 mt-auto' >
-            <div className='flex justify-center py-10 '>
-                
-                <h1 className='text-[40px] font-bold text-white ring-2 rounded shadow-xl bg-slate-100/5 px-4 '  >{loginForm ? 'Login' : 'Register'}</h1>
-         </div> 
-        <div className='flex justify-center' >
-            <div className=' w-100 flex flex-col text-white py-10 font-bold ring-2 rounded shadow-xl bg-slate-100/5 px-4 mx-2 ' >
+    <div className=' bg-gradient-to-b from-gray-800 to-gray-800 mt-auto min-h-screen '>
+        <div className='flex justify-center flex-col py-30 mt-auto' >
+            <div className='flex justify-center' >
+                <div className=' w-100 flex flex-col text-white py-10 font-bold  rounded shadow-xl bg-slate-100/5 px-4 mx-2 ' >
+                    <h1 className='text-[40px] y-10  font-bold text-white text-center'>{loginForm ? 'Login' : 'Register'}</h1>
+                    <h1 className='text-[12px] font-bold text-white/80 text-center'>{loginForm ? 'Log in to access your to do list!' : 'Sign up and join the community!'}</h1>
                 {loginForm ? 
                  <>
-                <form className=' flex flex-col text-white ' onSubmit={onSumbitFunction} >
-                    <label>Email</label><br/>
-                    <input type = "email"  onChange={(e) => setEmail(e.target.value)}  value={email} className = "ring-2 rounded shadow-xl py-1 px-1" ></input><br/>
-                    <label>Password</label><br/>
-                    <input type='password' onChange={(e) => setPassword(e.target.value)} value={password} className = "ring-2 rounded shadow-xl py-1 px-1" ></input><br/>
-                    <div className='flex justify-center'><br/>
-                        <input type="submit" value={"Login"} className = "ring-2 rounded-full shadow-xl py-1 px-8 hover:px-10 transition-all " ></input>
-                    </div>
-                </form>
-                <button className='text-white/40 hover:text-white py-3' onClick={ () => {navigate("/reset-password")}}  > Forgot Passowrd? </button>
+                    <form className=' flex flex-col text-white ' onSubmit={onSumbitFunction} >
+                        <label className='py-2 mt-5 text-sm'>Email</label>
+                        <input type = "email"  onChange={(e) => setEmail(e.target.value)}  value={email} className = "border-1 border-slate-400 rounded shadow-xl py-1 px-1" ></input><br/>
+                        <label className='py-2 text-sm' >Password</label>
+                        <input type='password' onChange={(e) => setPassword(e.target.value)} value={password} className = "border-1 border-slate-400 rounded shadow-xl py-1 px-1" ></input><br/>
+                        <div className='flex justify-center py-5'>
+                            <input type="submit" value={"Login"} className = " rounded-full shadow-xl py-2 bg-blue-500 px-8 duration-300 hover:bg-blue-500/80 transition-all " ></input>
+                        </div>
+                    </form>
+                    <button className='text-sm text-white/40 hover:text-white py-3' onClick={ () => {navigate("/reset-password")}}  > Forgot Passowrd? </button>
                 </>
                 :<form className=' flex flex-col text-white ' onSubmit={onSumbitFunction}  >
-                    <label>Name</label><br/>
-                    <input type = "text"  onChange={(e) => setName(e.target.value)} value={currentName} className = "ring-2 rounded shadow-xl py-1 px-1" ></input><br/>
-                    <label>Email</label><br/>
-                    <input type = "email"  onChange={(e) => setEmail(e.target.value)} value={email} className = "ring-2 rounded shadow-xl py-1 px-1" ></input><br/>
-                    <label>Password</label><br/>
-                    <input type='password' onChange={(e) => setPassword(e.target.value)} value={password} className = "ring-2 rounded shadow-xl py-1 px-1" ></input><br/>
-                    <div className='flex justify-center'><br/>
-                        <input type="submit" value={loginForm ? "Login" : "Register"} className = "ring-2 rounded-full shadow-xl py-1 px-8 hover:px-10 transition-all " ></input>
+                    <label className='py-2 mt-5 text-sm'>Name</label>
+                    <input type = "text"  onChange={(e) => setName(e.target.value)} value={currentName} className = "border-1 border-slate-400 rounded shadow-xl py-1 px-1" ></input>
+                    <label className='py-2 mt-5 text-sm' >Email</label>
+                    <input type = "email"  onChange={(e) => setEmail(e.target.value)} value={email} className = "border-1 border-slate-400 rounded shadow-xl py-1 px-1" ></input>
+                    <label className='py-2 mt-5 text-sm'>Password</label>
+                    <input type='password' onChange={(e) => setPassword(e.target.value)} value={password} className = "border-1 border-slate-400 rounded shadow-xl py-1 px-1" ></input>
+                    <div className='flex justify-center py-5'><br/>
+                        <input type="submit" value={loginForm ? "Login" : "Register"} className = " rounded-full shadow-xl py-2 bg-blue-500 px-8 duration-300 hover:bg-blue-500/80 transition-all  " ></input>
                     </div>
                 </form>}
                 <br/>
-                <button className='text-white/40 hover:text-white' onClick={ () => {setLoginForm(!loginForm)}}  > {loginForm ? "Don't have a account? Register!" : "Already have a account? Login!"} </button>
+                <button className='text-sm text-white/40 hover:text-white' onClick={ () => {setLoginForm(!loginForm)}}  > {loginForm ? "Don't have a account? Register!" : "Already have a account? Login!"} </button>
             </div>
            
         </div>
