@@ -82,8 +82,8 @@ const Profile:React.FC = () => {
                     {EmailScreenShown ? 
                         <>
                          <div className='fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black/50 z-50'>
-                             <div className='flex text-white text-sm border-1 rounded-md ring-1 px-4  bg-gray-800 transition-all duration-300 ease-in-out  drop-shadow-xl w-90 h-80 wd-40 flex-col justify-center'>
-                                 <h2 className='flex justify-center py-5 font-bold' >Email Verification Screen</h2>
+                             <div className='flex text-white text-sm  rounded-md px-4  bg-gray-800 transition-all duration-300 ease-in-out  drop-shadow-xl w-90 h-80 wd-40 flex-col justify-center'>
+                                 <h2 className='flex justify-center pb-5 font-bold' >Email Verification Screen</h2>
                                  <div className='flex justify-center text-center'>
                                     <p className='flex justify-center py-1 w-60' >Check your email for a one time code to verify your email.</p>
                                  </div>
@@ -91,12 +91,15 @@ const Profile:React.FC = () => {
                                  <input 
                                      type="text" 
                                      placeholder="Enter verification code" 
-                                     className="mt-2 w-full px-2  text-White rounded-md border-1 ring-1 flex justify-center py-2 my-5"
+                                     className="mt-2 w-full px-2  text-White rounded-md border-1  flex justify-center py-2 my-5"
                                      onChange={(e) => ChangeEmailCode(e.target.value)}
                                  />
-                                 <button  onClick={() => CompleteEmailVerify()} className='mt-2 text-white text-sm border-1 rounded-md ring-1 px-2 py-1 transition-all duration-300 ease-in-out hover:bg-white/50'>
+                                <div className='flex justify-center text-center'>
+
+                                 <button  onClick={() => CompleteEmailVerify()} className=' mt-2 text-white text-sm   w-40 rounded-md ring-1 px-2 py-1 transition-all duration-300 ease-in-out hover:bg-white/50'>
                                      Sumbit
                                  </button>
+                                </div>
                              </div>
                          </div>
                         </>:

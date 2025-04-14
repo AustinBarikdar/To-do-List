@@ -8,7 +8,6 @@ const Dashboard: React.FC = () => {
     const [date, setDate] = React.useState("");
     const [title, setTitle] = React.useState("");
     const [description, setDescription] = React.useState("");
-    const [checkbox, setCheckbox] = React.useState(false);
 
     const context = useContext(AppContent);
 
@@ -68,7 +67,7 @@ const Dashboard: React.FC = () => {
 
         if (data.success) {
             toast.success("Successfully deleted task", toastdata);
-            const updatedList = doList.filter((task: any, i: number) => i !== index);
+            const updatedList = doList.filter((_: any, i: number) => i !== index);
             setdoList(updatedList);
             localStorage.setItem('doList', JSON.stringify(updatedList));
         } else {
@@ -128,7 +127,7 @@ const Dashboard: React.FC = () => {
                     <p className='text-center text-gray-400 text-sm mb-6'>View and manage your tasks</p>
                     <ul className='space-y-4 overflow-auto max-h-96 scheme-dark bg-transparent px-5 scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-800'>
                         {   
-                            doList.length === 0 ?
+                            (!doList) ?
                                 <li className=' p-4 rounded-lg shadow text-center'>No tasks available</li>
                             :
                             doList && doList.map((task: any, index: number) => (
