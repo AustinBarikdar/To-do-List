@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { AppContent } from '../context/AppContext';
 import { toast, ToastOptions } from 'react-toastify';
 
@@ -15,7 +15,25 @@ const Dashboard: React.FC = () => {
         throw new Error("AppContent context is undefined");
     }
 
-    const { backendURL } = context;
+    const { backendURL,setdoList,doList } = context; 
+
+    useEffect(() => {
+        if (!doList) {
+            const fetchTasks = async () => {
+                const { data } = await axios.get(backendURL + "/api/task/get-tasks", { withCredentials: true });
+                if (data.success) {
+                    setdoList(data.data);
+                    localStorage.setItem('doList', JSON.stringify(data.data));
+                } else {
+                    toast.error(data.message, toastdata);
+                }
+            }
+            fetchTasks();    
+
+        }
+    },[doList])
+
+    
 
     const createTask = async () => {
         if (!title || !date) {
@@ -30,10 +48,14 @@ const Dashboard: React.FC = () => {
             "date": date
         }, { withCredentials: true });
 
+        console.log(data);
         if (data.success) {
             toast.success("Successfully created new task", toastdata);
+            setdoList(doList.concat(data.data));
+            localStorage.setItem('doList', JSON.stringify(doList.concat(data.data)));
             setTitle("");
             setDescription("");
+            
         } else {
             toast.error(data.message, toastdata);
         }
@@ -75,55 +97,23 @@ const Dashboard: React.FC = () => {
                     <p className='text-center text-gray-400 text-sm mb-6'>View and manage your tasks</p>
                     <ul className='space-y-4 overflow-auto max-h-96 scheme-dark bg-transparent px-5 scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-800'>
                         
-                        <li className='bg-gray-700 p-4 px-5 rounded-lg shadow'>
-                            <h3 className='text-lg font-bold'>Homework 1</h3>
-                            <p className='text-gray-400 text-sm'>Homework is due soon</p>
-                            <div className='flex justify-between items-center mt-2'>
-                                <span className='text-gray-400 text-sm'>Due at: [Insert Due Date]</span>
-                                <div className='flex items-center'>
-                                    <label className='mr-2'>Completed</label>
-                                    <input type="checkbox" className="accent-blue-500" />
-                                </div>
-                            </div>
-                        </li>
-
-                        <li className='bg-gray-700 p-4 px-5 rounded-lg shadow'>
-                            <h3 className='text-lg font-bold'>Homework 1</h3>
-                            <p className='text-gray-400 text-sm'>Homework is due soon</p>
-                            <div className='flex justify-between items-center mt-2'>
-                                <span className='text-gray-400 text-sm'>Due at: [Insert Due Date]</span>
-                                <div className='flex items-center'>
-                                    <label className='mr-2'>Completed</label>
-                                    <input type="checkbox" className="accent-blue-500" />
-                                </div>
-                            </div>
-                        </li>
-                        <li className='bg-gray-700 p-4 px-5 rounded-lg shadow'>
-                            <h3 className='text-lg font-bold'>Homework 1</h3>
-                            <p className='text-gray-400 text-sm'>Homework is due soon</p>
-                            <div className='flex justify-between items-center mt-2'>
-                                <span className='text-gray-400 text-sm'>Due at: [Insert Due Date]</span>
-                                <div className='flex items-center'>
-                                    <label className='mr-2'>Completed</label>
-                                    <input type="checkbox" className="accent-blue-500" />
-                                </div>
-                            </div>
-                        </li>
                         
-                        <li className='bg-gray-700 p-4 px-5 rounded-lg shadow'>
-                            <h3 className='text-lg font-bold'>Homework 1</h3>
-                            <p className='text-gray-400 text-sm'>Homework is due soon</p>
-                            <div className='flex justify-between items-center mt-2'>
-                                <span className='text-gray-400 text-sm'>Due at: [Insert Due Date]</span>
-                                <div className='flex items-center'>
-                                    <label className='mr-2'>Completed</label>
-                                    <input type="checkbox" className="accent-blue-500" />
-                                </div>
-                            </div>
-                        </li>
-
+                        {
                         
-
+                            doList && doList.map((task: any, index: number) => (
+                                <li key={index} className='bg-gray-700 p-4 px-5 rounded-lg shadow'>
+                                    <h3 className='text-lg font-bold'>{task.title}</h3>
+                                    <p className='text-gray-400 text-sm'>{task.description}</p>
+                                    <div className='flex justify-between items-center mt-2'>
+                                        <span className='text-gray-400 text-sm'>Due at: {new Date(task.date).toLocaleString()}</span>
+                                        <div className='flex items-center'>
+                                            <label className='mr-2'>Completed</label>
+                                            <input type="checkbox" className="accent-blue-500" />
+                                        </div>
+                                    </div>
+                                </li>
+                            ))
+                        }
                     </ul>
                 </div>
             </div>

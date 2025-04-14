@@ -1,6 +1,6 @@
 import axios from "axios";
 import { createContext,useState, useEffect } from "react";
-import cookie from "js-cookie"
+
 interface MyContextProps {
     getUser: () => Promise<void>
     backendURL: any,
@@ -8,6 +8,8 @@ interface MyContextProps {
     setIsLoggedin: React.Dispatch<React.SetStateAction<boolean>>,
     userData: any,
     setUserData: React.Dispatch<React.SetStateAction<boolean>>,
+    doList: any,
+    setdoList:  React.Dispatch<React.SetStateAction<any>>,
   }
 
 export const AppContent = createContext <MyContextProps | undefined>(undefined);
@@ -16,7 +18,8 @@ export const AppContextProvider = (props: any) => {
     const backendURL = import.meta.env.VITE_BACKEND_URL
     const [isLoggedin,setIsLoggedin] = useState(localStorage.getItem('isLoggedin') == 'true');
     const [userData,setUserData] = useState(JSON.parse(localStorage.getItem('userData') || 'null'));
-
+    const [doList,setdoList] = useState(JSON.parse(localStorage.getItem('doList') || 'null'));
+    
     useEffect(() => {
         if (isLoggedin){
             checkToken();
@@ -53,7 +56,6 @@ export const AppContextProvider = (props: any) => {
                 localStorage.removeItem('userData');
                 setIsLoggedin(false);
                 setUserData(false);
-                cookie.remove('token', {path: '/'});
             }else{
                 console.log(response.data)
             }
@@ -69,6 +71,8 @@ export const AppContextProvider = (props: any) => {
         setIsLoggedin,
         userData,
         setUserData,
+        doList,
+        setdoList
     }
 
     return(
