@@ -30,7 +30,7 @@ export const register = async (req, res) => {
 
     // Create a JWT token with the user's ID and a 7-day expiration
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "7d",
+      expiresIn: "2d",
     });
 
     // Set the token as a cookie in the response
@@ -38,7 +38,7 @@ export const register = async (req, res) => {
       httpOnly: true, // Cookie is accessible only by the web server
       secure: process.env.NODE_ENV === "production", // Cookie is sent only over HTTPS in production
       sameSite: process.env.NODE_ENV === "production" ? "none" : "strict", // Cookie is restricted to same site in development
-      maxAge: 7 * 24 * 60 * 60 * 1000, // Cookie expiration time in milliseconds (7 days)
+      maxAge: 2 * 24 * 60 * 60 * 1000, // Cookie expiration time in milliseconds (2 days)
     });
 
     // Sending welcome email
@@ -49,6 +49,7 @@ export const register = async (req, res) => {
       text: `Hello ${name}, Welcome to our platform!, Your account has been created with them email ID ${email}`, // plain text body
     };
 
+    
     await transporter.sendMail(mailOptions);
     // Respond with success message
     res.json({ success: true, message: "User registered successfully" });

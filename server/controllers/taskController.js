@@ -4,7 +4,7 @@ import userModel from "../models/userModel.js";
 
 export const CreateTask = async(req,res) => {
     const {userId,title,description,date} = req.body;
-
+    
     if ((!title || !date) && title.length >= 1){
         return res.json({success:false, message: "Missing title or date, must have content in title"})
     }
@@ -22,11 +22,11 @@ export const CreateTask = async(req,res) => {
         }
 
 
-        const task = new taskModel({ userId:user._id, title:title,description: description, date:date });
+        const task = new taskModel({ email:user.email, title:title, description: description, date:date });
         
         await task.save();
 
-        return res.json({success:true, message: "Successfully created new task"})
+        return res.json({success:true, message: "Successfully created new task", data: await taskModel.find({email: user.email,title:title, description: description, date:date})})
     }catch(error){
         return res.json({success:false, message: error.message})
     }
@@ -46,8 +46,8 @@ export const getTasks = async(req,res) =>{
         if (!user){
             return res.json({success:false, message: "No User"} )
         }
-        const task = await taskModel.find({userId: user._id });
-
+        const task = await taskModel.find({email: user.email});
+        console.log(task)
         return res.json({success:true, data:task})
     
     }catch(error){
