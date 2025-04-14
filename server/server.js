@@ -13,7 +13,7 @@ const port = process.env.PORT || 4000
 
 connectDB();
 
-const allowedorgins = ["http://localhost:5173","https://to-do-list-vq33.onrender.com"]
+const allowedorgins = ['https://to-do-list-kj4q.onrender.com']
 app.use(express.json());
 app.use(cookieParser())
 app.use(cors({origin: allowedorgins, credentials: true})) //send the cookies in the response from the express app
