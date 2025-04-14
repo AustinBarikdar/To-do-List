@@ -13,7 +13,7 @@ const port = process.env.PORT || 4000
 
 connectDB();
 
-const allowedorgins = ["http://localhost:5173"]
+const allowedorgins = ["http://localhost:5173","https://to-do-list-vq33.onrender.com"]
 app.use(express.json());
 app.use(cookieParser())
 app.use(cors({origin: allowedorgins, credentials: true})) //send the cookies in the response from the express app
@@ -21,7 +21,7 @@ app.use(cors({origin: allowedorgins, credentials: true})) //send the cookies in 
 //API ENDPOINTS
 app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
-app.use('/api/task', taskRouter)
+app.use('/api/task', taskRouter);
 
 
 app.listen(port, ()=> console.log(`Sever started on port:${port}`));
