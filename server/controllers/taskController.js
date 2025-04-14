@@ -54,3 +54,36 @@ export const getTasks = async(req,res) =>{
         return res.json({success: false, message:error.message});
     }
 }
+
+export const deleteTask = async(req,res) => {
+    const taskId = req.params.id;
+    if (!taskId){
+        return res.json({success:false, message: "No TaskId"} )
+    }
+    try{
+        const task = await taskModel.findByIdAndDelete(taskId);
+        if (!task){
+            return res.json({success:false, message: "No Task"} )
+        }
+        return res.json({success:true, message:"Task Deleted"})
+    }catch(error){
+        return res.json({success: false, message:error.message});
+    }
+}
+
+export const updateTask = async(req,res) => {
+    const {completed} = req.body;
+
+    const taskId = req.params.id;
+    try{
+        const task = await taskModel.updateOne({_id: taskId},{completed: completed});
+        if (!task){
+            return res.json({success:false, message: "No Task"} )
+        }
+
+        return res.json({success:true, message:"Task Updated"})
+
+    }catch(error){
+        return res.json({success: false, message:error.message});
+    }
+}
