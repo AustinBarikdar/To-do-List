@@ -29,8 +29,8 @@ const Dashboard: React.FC = () => {
 
     
     useEffect(() => {           
-            fetchTasks();     
-    },[doList])
+        fetchTasks();     
+    },[])
 
     
 
@@ -54,7 +54,6 @@ const Dashboard: React.FC = () => {
             localStorage.setItem('doList', JSON.stringify(doList.concat(data.data)));
             setTitle("");
             setDescription("");
-            
         } else {
             toast.error(data.message, toastdata);
         }
