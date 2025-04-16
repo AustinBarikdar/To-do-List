@@ -90,7 +90,7 @@ export const login = async (req, res) => {
     res.cookie("token", token, {
       httpOnly: true, // Cookie is accessible only by the web server
       secure: process.env.NODE_ENV === "production", // Cookie is sent only over HTTPS in production
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "strict", // Cookie is restricted to same site in development
+      sameSite: process.env.NODE_ENV === "production" ? "strict" : "none", // Cookie is restricted to same site in development
       maxAge: 7 * 24 * 60 * 60 * 1000, // Cookie expiration time in milliseconds (7 days)
     });
 

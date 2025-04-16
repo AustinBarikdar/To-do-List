@@ -17,20 +17,19 @@ const Dashboard: React.FC = () => {
 
     const { backendURL,setdoList,doList } = context; 
 
-    useEffect(() => {
-        if (!doList) {
-            const fetchTasks = async () => {
-                const { data } = await axios.get(backendURL + "/api/task/get-tasks", { withCredentials: true });
-                if (data.success) {
-                    setdoList(data.data);
-                    localStorage.setItem('doList', JSON.stringify(data.data));
-                } else {
-                    toast.error(data.message, toastdata);
-                }
-            }
-            fetchTasks();    
-
+    const fetchTasks = async () => {
+        const { data } = await axios.get(backendURL + "/api/task/get-tasks", { withCredentials: true });
+        if (data.success) {
+            setdoList(data.data);
+            localStorage.setItem('doList', JSON.stringify(data.data));
+        } else {
+            toast.error(data.message, toastdata);
         }
+    }
+
+    
+    useEffect(() => {           
+            fetchTasks();     
     },[doList])
 
     
@@ -71,6 +70,7 @@ const Dashboard: React.FC = () => {
             setdoList(updatedList);
             localStorage.setItem('doList', JSON.stringify(updatedList));
         } else {
+            fetchTasks();
             toast.error(data.message, toastdata);
         }
     }
@@ -87,6 +87,7 @@ const Dashboard: React.FC = () => {
             setdoList(updatedList);
             localStorage.setItem('doList', JSON.stringify(updatedList));
         } else {
+            fetchTasks();
             toast.error(data.message, toastdata);
         }
     }
